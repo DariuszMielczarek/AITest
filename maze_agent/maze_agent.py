@@ -1,3 +1,4 @@
+import bisect
 from abc import ABC, abstractmethod
 import matplotlib.pyplot as plt
 import matplotlib
@@ -22,7 +23,8 @@ class MazeAgent(ABC):
         if maze:
             self.change_maze(maze, maze_type, start_x, start_y, goal_x, goal_y)
 
-    def change_maze(self, maze: np.ndarray = None, maze_type: str = None, start_x: int = 0, start_y: int = 0, goal_x: int = 0, goal_y: int = 0): # noqa
+    def change_maze(self, maze: np.ndarray = None, maze_type: str = None, start_x: int = 0, start_y: int = 0,
+                    goal_x: int = 0, goal_y: int = 0):  # noqa
         self._maze = maze
         self._start_x = start_x if start_x != 0 else 1
         self._start_y = start_y if start_y != 0 else 1
@@ -31,7 +33,6 @@ class MazeAgent(ABC):
         self._maze[self._goal_x][self._goal_y] = 3
         self._frontier.clear()
         self._explored_states.clear()
-        self._frontier.append((self._start_x, self._start_y))
         self._maze_type = maze_type
         self._steps_count = 0
 
@@ -39,14 +40,20 @@ class MazeAgent(ABC):
     def search_agent(self, show_visuals: bool = True):
         pass
 
-    def _check_possible_moves(self, pos_x: int, pos_y: int) -> int:
+    def _check_possible_moves(self, pos_x: int, pos_y: int, cost: int = 0, heuristic_function=None) -> int:  # noqa
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
         possible_moves_count = 0
         for dx, dy in directions:
-            if ((pos_x + dx, pos_y + dy) not in self._frontier
+            if (Node(pos_x + dx, pos_y + dy, 0, 0) not in self._frontier
                     and (pos_x + dx, pos_y + dy) not in self._explored_states
                     and self._maze[pos_x + dx][pos_y + dy] != 1):
-                self._frontier.append((pos_x + dx, pos_y + dy))
+                if heuristic_function:
+                    bisect.insort(self._frontier,
+                                  Node(pos_x + dx, pos_y + dy, cost + 1,
+                                       heuristic_function((pos_x + dx, pos_y + dy),
+                                                          (self._goal_x, self._goal_y)) + cost + 1))
+                else:
+                    self._frontier.append(Node(pos_x + dx, pos_y + dy, 0, 0))
                 possible_moves_count += 1
         return possible_moves_count
 
@@ -61,3 +68,17 @@ class MazeAgent(ABC):
         plt.axis('off')
         plt.pause(0.0001)
         plt.draw()
+
+
+class Node:
+    def __init__(self, pos_x: int, pos_y: int, previous_cost: int, estimated_cost: int):
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.previous_cost = previous_cost
+        self.estimated_cost = estimated_cost
+
+    def __lt__(self, other):
+        return self.estimated_cost < other.estimated_cost
+
+    def __eq__(self, other):
+        return self.pos_x == other.pos_x and self.pos_y == other.pos_y

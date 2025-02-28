@@ -1,9 +1,10 @@
 from maze_agent.goal_exception import GoalException
-from maze_agent.maze_agent import MazeAgent
+from maze_agent.maze_agent import MazeAgent, Node
 
 
 class IdsMazeAgent(MazeAgent):
     def search_agent(self, show_visuals: bool = True):
+        self._frontier.append(Node(self._start_x, self._start_y, 0, 0))
         for limit in range(0, 1000):
             self._reset_maze()
             return_value = self._ids_search_agent((self._start_x, self._start_y), limit, show_visuals)
@@ -22,8 +23,8 @@ class IdsMazeAgent(MazeAgent):
             if show_visuals:
                 self._visualize_maze()
             while possible_neighbours > 0:
-                (pos_x, pos_y) = self._frontier.pop()
-                return_value = self._ids_search_agent((pos_x, pos_y), limit-1, show_visuals)
+                node = self._frontier.pop()
+                return_value = self._ids_search_agent((node.pos_x, node.pos_y), limit-1, show_visuals)
                 if return_value:
                     return return_value
                 possible_neighbours -= 1

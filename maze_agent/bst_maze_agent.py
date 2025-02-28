@@ -1,16 +1,17 @@
 from maze_agent.goal_exception import GoalException
-from maze_agent.maze_agent import MazeAgent
+from maze_agent.maze_agent import MazeAgent, Node
 
 
 class BstMazeAgent(MazeAgent):
     def search_agent(self, show_visuals: bool = True):
+        self._frontier.append(Node(self._start_x, self._start_y, 0, 0))
         while len(self._frontier) != 0:
             self._steps_count += 1
-            (pos_x, pos_y) = self._frontier.pop(0)
-            if pos_x == self._goal_x and pos_y == self._goal_y:
+            node = self._frontier.pop(0)
+            if node.pos_x == self._goal_x and node.pos_y == self._goal_y:
                 return self._steps_count
-            self._check_possible_moves(pos_x, pos_y)
-            self._set_state_as_explored(pos_x, pos_y)
+            self._check_possible_moves(node.pos_x, node.pos_y)
+            self._set_state_as_explored(node.pos_x, node.pos_y)
             if show_visuals:
                 self._visualize_maze()
         raise GoalException
