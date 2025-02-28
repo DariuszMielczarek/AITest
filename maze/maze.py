@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
@@ -6,13 +6,18 @@ import matplotlib
 matplotlib.use('TkAgg')
 
 
-class Maze(ABC):
+class Maze:
     _maze: np.ndarray
 
-    def __init__(self, size_x: int, size_y: int, show_generation_steps: bool = False):
-        self._maze = np.ones((size_x + 2, size_y + 2))
-        self._maze[size_x][size_y] = 0
-        self._generate_maze(1, 1, show_generation_steps)
+    def __init__(self, filename: str = None, size_x: int = 0, size_y: int = 0, show_generation_steps: bool = False):
+        if filename:
+            self.load_maze(filename)
+        else:
+            if size_x <= 0 or size_y <= 0:
+                raise ValueError('Size must be greater than zero')
+            self._maze = np.ones((size_x + 2, size_y + 2))
+            self._maze[size_x][size_y] = 0
+            self._generate_maze(1, 1, show_generation_steps)
 
     @abstractmethod
     def _generate_maze(self, start_x: int, start_y: int, show_generation_steps: bool) -> None:
@@ -30,12 +35,25 @@ class Maze(ABC):
 
         return counter < 2
 
-    def _visualize_maze(self):
+    def _visualize_maze(self) -> None:
         plt.clf()
         plt.imshow(self._maze.transpose())
         plt.axis('off')
         plt.pause(0.01)
         plt.draw()
 
-    def save_maze(self) -> str:
-        pass
+    def save_maze(self, filename) -> str:
+        np.save(filename, self._maze)
+        return filename
+
+    def load_maze(self, filename) -> None:
+        self._maze = np.load(filename)
+
+    def display_maze(self) -> None:
+        plt.clf()
+        plt.imshow(self._maze.transpose())
+        plt.axis('off')
+        plt.show()
+
+    def get_maze(self) -> np.ndarray:
+        return self._maze
