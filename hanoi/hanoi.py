@@ -2,6 +2,7 @@ class Hanoi:
     def __init__(self, n, tower_number):
         self.towers = [[], [], []]
         self.towers[tower_number] = list(range(1, n + 1))
+        self.n = n
 
     def get_possible_moves(self):
         possible_moves = []

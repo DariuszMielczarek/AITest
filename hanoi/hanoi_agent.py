@@ -23,7 +23,7 @@ class HanoiAgent(ABC):
         self._steps_count = 0
 
     @abstractmethod
-    def search_agent(self, show_visuals: bool = True):
+    def search_agent(self, show_visuals: bool = True, heuristic_function=None):
         pass
 
     def _check_possible_moves(self, hanoi: Hanoi, cost: int = 0, heuristic_function=None) -> int:
@@ -34,7 +34,7 @@ class HanoiAgent(ABC):
             new_hanoi.move(move[0], move[1])
             if new_hanoi not in self._explored_states and HanoiState(new_hanoi, 0, 0) not in self._frontier:
                 if heuristic_function:
-                    bisect.insort(self._frontier, HanoiState(new_hanoi, cost + 1, heuristic_function() + cost + 1))
+                    bisect.insort(self._frontier, HanoiState(new_hanoi, cost + 1, heuristic_function(hanoi) + cost + 1))
                 else:
                     self._frontier.append(HanoiState(new_hanoi, cost + 1, 0))
                 possible_moves_count += 1
