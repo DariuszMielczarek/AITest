@@ -7,7 +7,8 @@ class IdsHanoiAgent(HanoiAgent):
         self._frontier.append(HanoiState(self._hanoi_start_state, 0, 0))
         for limit in range(0, 150):
             self._explored_states.clear()
-            return_value, return_cost = self._ids_search_agent(HanoiState(self._hanoi_start_state, 0, 0), limit, show_visuals)
+            return_value, return_cost = self._ids_search_agent(
+                HanoiState(self._hanoi_start_state, 0, 0), limit, show_visuals)
             if return_value:
                 return return_value, return_cost
         raise GoalException

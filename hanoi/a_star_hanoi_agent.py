@@ -1,5 +1,4 @@
 from hanoi.hanoi_agent import HanoiAgent, HanoiState
-from hanoi.heuristics import goal_tower_height_heuristic
 from maze_agent.goal_exception import GoalException
 
 
@@ -24,4 +23,3 @@ class AStarHanoiAgent(HanoiAgent):
 
     def __str__(self):
         return "A-Star Agent"
-

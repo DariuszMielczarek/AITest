@@ -4,6 +4,7 @@ from hanoi import Hanoi, HanoiAgent, DstHanoiAgent, BstHanoiAgent, IdsHanoiAgent
     count_all_moves
 from maze import Maze, DstMaze, AStarMaze
 from maze_agent import MazeAgent, BstMazeAgent, DstMazeAgent, IdsMazeAgent, AStarMazeAgent
+from nim import NimAgent, BstNimAgent, Nim, NimGameplay, MinimaxNimAgent, event_total_discs_function
 
 
 def test_agent(agent: MazeAgent, show_visuals: bool = True):
@@ -39,6 +40,10 @@ def test_hanoi_agent(agent: HanoiAgent, tests_count: int, show_visuals: bool = T
 
 
 if __name__ == '__main__':
+    nim: Nim = Nim(5)
+    nim_agent: NimAgent = MinimaxNimAgent(nim_start=nim, limit=5)
+    print('Result: ' + NimGameplay.gameplay(nim, nim_agent, event_total_discs_function))
+    # nim_agent.search_agent(True, None, False)
     # size = 10
     # # maze: Maze = DstMaze(size_x=size, size_y=size, show_generation_steps=True)
     # # maze.save_maze('dst_maze_mini')
@@ -60,53 +65,53 @@ if __name__ == '__main__':
     # maze_agent_a_star: MazeAgent = AStarMazeAgent()
     # test_agent(maze_agent_a_star, show_visuals=True)
 
-    test_count = 7
-
-    # DST Agent
-    hanoi_game_agent_dst: HanoiAgent = DstHanoiAgent()
-    results_dst = test_hanoi_agent(hanoi_game_agent_dst, test_count, False)
-
-    # BST Agent
-    hanoi_game_agent_bst: HanoiAgent = BstHanoiAgent()
-    results_bst = test_hanoi_agent(hanoi_game_agent_bst, test_count, False)
-
-    # # IDS Agent
-    # hanoi_game_agent_ids: HanoiAgent = IdsHanoiAgent()
-    # test_hanoi_agent(hanoi_game_agent_ids, 3, True)
-
-    # A-Star1 Agent
-    hanoi_game_agent_a_star: HanoiAgent = AStarHanoiAgent()
-    results_a_star1 = test_hanoi_agent(hanoi_game_agent_a_star, test_count, False, goal_tower_height_heuristic)
-
-    # A-Star2 Agent
-    hanoi_game_agent_a_star2: HanoiAgent = AStarHanoiAgent()
-    results_a_star2 = test_hanoi_agent(hanoi_game_agent_a_star2, test_count, False, goal_two_towers_height_heuristic)
-
-    # A-Star3 Agent
-    hanoi_game_agent_a_star3: HanoiAgent = AStarHanoiAgent()
-    results_a_star3 = test_hanoi_agent(hanoi_game_agent_a_star3, test_count, False,
-                                       goal_two_towers_and_diffs_sum_heuristic)
-
-    # A-Star4 Agent
-    hanoi_game_agent_a_star4: HanoiAgent = AStarHanoiAgent()
-    results_a_star4 = test_hanoi_agent(hanoi_game_agent_a_star4, test_count, False,
-                                       goal_two_towers_and_diffs_max_heuristic)
-
-    # A-Star5 Agent
-    hanoi_game_agent_a_star5: HanoiAgent = AStarHanoiAgent()
-    results_a_star5 = test_hanoi_agent(hanoi_game_agent_a_star5, test_count, False,
-                                       count_on_wrong_place)
-
-    # A-Star5 Agent
-    hanoi_game_agent_a_star6: HanoiAgent = AStarHanoiAgent()
-    results_a_star6 = test_hanoi_agent(hanoi_game_agent_a_star6, test_count, False,
-                                       count_all_moves)
-
-    print(results_dst)
-    print(results_bst)
-    print(results_a_star1)
-    print(results_a_star2)
-    print(results_a_star3)
-    print(results_a_star4)
-    print(results_a_star5)
-    print(results_a_star6)
+    # test_count = 7
+    #
+    # # DST Agent
+    # hanoi_game_agent_dst: HanoiAgent = DstHanoiAgent()
+    # results_dst = test_hanoi_agent(hanoi_game_agent_dst, test_count, False)
+    #
+    # # BST Agent
+    # hanoi_game_agent_bst: HanoiAgent = BstHanoiAgent()
+    # results_bst = test_hanoi_agent(hanoi_game_agent_bst, test_count, False)
+    #
+    # # # IDS Agent
+    # # hanoi_game_agent_ids: HanoiAgent = IdsHanoiAgent()
+    # # test_hanoi_agent(hanoi_game_agent_ids, 3, True)
+    #
+    # # A-Star1 Agent
+    # hanoi_game_agent_a_star: HanoiAgent = AStarHanoiAgent()
+    # results_a_star1 = test_hanoi_agent(hanoi_game_agent_a_star, test_count, False, goal_tower_height_heuristic)
+    #
+    # # A-Star2 Agent
+    # hanoi_game_agent_a_star2: HanoiAgent = AStarHanoiAgent()
+    # results_a_star2 = test_hanoi_agent(hanoi_game_agent_a_star2, test_count, False, goal_two_towers_height_heuristic)
+    #
+    # # A-Star3 Agent
+    # hanoi_game_agent_a_star3: HanoiAgent = AStarHanoiAgent()
+    # results_a_star3 = test_hanoi_agent(hanoi_game_agent_a_star3, test_count, False,
+    #                                    goal_two_towers_and_diffs_sum_heuristic)
+    #
+    # # A-Star4 Agent
+    # hanoi_game_agent_a_star4: HanoiAgent = AStarHanoiAgent()
+    # results_a_star4 = test_hanoi_agent(hanoi_game_agent_a_star4, test_count, False,
+    #                                    goal_two_towers_and_diffs_max_heuristic)
+    #
+    # # A-Star5 Agent
+    # hanoi_game_agent_a_star5: HanoiAgent = AStarHanoiAgent()
+    # results_a_star5 = test_hanoi_agent(hanoi_game_agent_a_star5, test_count, False,
+    #                                    count_on_wrong_place)
+    #
+    # # A-Star6 Agent
+    # hanoi_game_agent_a_star6: HanoiAgent = AStarHanoiAgent()
+    # results_a_star6 = test_hanoi_agent(hanoi_game_agent_a_star6, test_count, False,
+    #                                    count_all_moves)
+    #
+    # print(results_dst)
+    # print(results_bst)
+    # print(results_a_star1)
+    # print(results_a_star2)
+    # print(results_a_star3)
+    # print(results_a_star4)
+    # print(results_a_star5)
+    # print(results_a_star6)

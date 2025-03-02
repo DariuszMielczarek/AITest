@@ -23,4 +23,3 @@ class DstHanoiAgent(HanoiAgent):
 
     def __str__(self):
         return "DST Agent"
-
