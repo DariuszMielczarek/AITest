@@ -1,6 +1,6 @@
 from heapq import heappush, heappop
 import random
-from maze import Maze
+from search.maze import Maze
 
 
 class AStarMaze(Maze):

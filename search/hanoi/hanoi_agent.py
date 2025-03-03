@@ -1,7 +1,7 @@
 import bisect
 import copy
 from abc import ABC, abstractmethod
-from hanoi.hanoi import Hanoi
+from search.hanoi import Hanoi
 
 
 class HanoiAgent(ABC):

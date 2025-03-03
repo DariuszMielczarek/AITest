@@ -2,7 +2,7 @@ import copy
 from abc import ABC, abstractmethod
 import random
 import numpy as np
-from nim import Nim
+from search.nim import Nim
 
 
 class NimAgent(ABC):
@@ -29,7 +29,8 @@ class NimAgent(ABC):
     def search_agent(self, show_visuals: bool = True, heuristic_function=None, opponent_starts=False):
         pass
 
-    def _check_possible_moves(self, nim: Nim) -> list:
+    @staticmethod
+    def _check_possible_moves(nim: Nim) -> list:
         possible_moves = nim.get_possible_moves()
         possible_nims = []
         for move in possible_moves:

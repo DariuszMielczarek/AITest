@@ -1,4 +1,4 @@
-from hanoi import Hanoi
+from search.hanoi import Hanoi
 
 
 def goal_tower_height_heuristic(hanoi: Hanoi):

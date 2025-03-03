@@ -1,6 +1,6 @@
-from nim import Nim
-from nim.nim_agent import NimAgent
-from nim.nim_result_estimation_functions import no_winner_function
+from search.nim import Nim
+from search.nim.nim_agent import NimAgent
+from search.nim.nim_result_estimation_functions import no_winner_function
 
 
 class MinimaxNimAgent(NimAgent):
@@ -24,7 +24,7 @@ class MinimaxNimAgent(NimAgent):
                 return self._explored_options[new_nim][max_value], tower, count
             elif limit == 1:
                 return (estimating_function(new_nim), tower,
-                        count) if estimating_function is not None else (no_winner_function(new_nim), tower, count)
+                        count) if estimating_function is not None else (no_winner_function(), tower, count)
             else:
                 value, tower, count = self.minimax(new_nim, not max_value, limit - 1, estimating_function)
             if (max_value and value == 1) or (not max_value and value == -1):
@@ -33,7 +33,7 @@ class MinimaxNimAgent(NimAgent):
                 self._explored_options[new_nim][max_value] = value
                 return value, tower, count
             values.append((value, tower, count))
-        return_group = (values[0][0], values[0][1], values[0][2])
+        return_group = (values[0][0], values[0][1], values[0][2]) # noqa
         for value, tower, count in values[1:]:
             if (max_value and value > return_group[0]) or (not max_value and value < return_group[0]):
                 return_group = (value, tower, count)

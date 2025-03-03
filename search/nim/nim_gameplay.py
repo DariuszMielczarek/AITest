@@ -1,7 +1,5 @@
-import copy
-
-from nim import Nim
-from nim.nim_agent import NimAgent
+from search.nim import Nim
+from search.nim.nim_agent import NimAgent
 
 
 class NimGameplay:

@@ -1,6 +1,6 @@
-from maze_agent.goal_exception import GoalException
-from maze_agent.heuristics import manhattan_distance
-from maze_agent.maze_agent import MazeAgent, Node
+from search.maze.maze_agent.goal_exception import GoalException
+from search.maze.maze_agent.heuristics import manhattan_distance
+from search.maze.maze_agent.maze_agent import MazeAgent, Node
 
 
 class AStarMazeAgent(MazeAgent):

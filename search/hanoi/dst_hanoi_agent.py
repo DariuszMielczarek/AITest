@@ -1,5 +1,5 @@
-from hanoi.hanoi_agent import HanoiAgent, HanoiState
-from maze_agent.goal_exception import GoalException
+from search.hanoi import HanoiAgent, HanoiState
+from search.maze.maze_agent.goal_exception import GoalException
 
 
 class DstHanoiAgent(HanoiAgent):

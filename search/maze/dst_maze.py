@@ -1,5 +1,5 @@
 import random
-from maze import Maze
+from search.maze import Maze
 
 
 class DstMaze(Maze):

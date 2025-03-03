@@ -1,8 +1,8 @@
 import bisect
 import copy
 
-from maze_agent.goal_exception import GoalException
-from nim.nim_agent import NimState, NimAgent
+from search.maze.maze_agent.goal_exception import GoalException
+from search.nim.nim_agent import NimState, NimAgent
 
 
 class BstNimAgent(NimAgent):
