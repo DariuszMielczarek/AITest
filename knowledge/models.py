@@ -8,6 +8,13 @@ def model_checking(kb: KnowledgeBase, query: ProblemFacts):
         if possibility == query:
             possibilities.append(possibility)
     if len(possibilities) != 0 and all(possibility == possibilities[0] for possibility in possibilities):
-        return True
+        return possibilities[0]
     else:
-        return False
+        return None
+
+
+def full_model_checking(kb: KnowledgeBase, _: ProblemFacts):
+    if len(kb.all_possible_problem_facts) == kb.klass.get_attr_count():
+        return kb.all_possible_problem_facts
+    else:
+        return None
